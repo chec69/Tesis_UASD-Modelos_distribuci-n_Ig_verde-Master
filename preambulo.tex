@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%% Seleccion del tipo de documento y formato de página%%%%%%%%%%%%%
+
+\documentclass[oneside,% formato de páginas de un solo lado
+               openany,% los capítulos pueden empezar en cualquier página
+               letterpaper,% tamaño de papel ocho y medio por onze
+               12pt]% tamaño de letra normal de 12pt 
+               {book} % clase libro
+\usepackage{geometry} % permite dar opciones de configuración de página
+\geometry{top=1in,% tamaño del margen superior
+          bottom=1in,% tamaño del margen inferior
+          left=1.5in,% tamaño del margen izquierdo
+          right=1in,% tamaño del margen derecho
+          showframe=false % muestra los marcos de las cajas
+         }% -- margin,marginparwidth, landscape,a4paper
+          
+%%%%%%%%%%%%%%%%%% Configuración de los encabezados de capítulos, secciones y demás%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{titletoc} % permite modificar el estilo del índice general
+\usepackage[tiny]{titlesec} % permite modificar los encabezados de las distintas partes del documento
+\usepackage{color}% permite añadir colores al documento
+\definecolor{gray75}{gray}{0.75} %define el comando para un color
+\newcommand{\hspdiez}{\hspace{10pt}} % crea un nuevo comando para dejar un espacio horizontal de 10 pt
+\titleformat{\chapter}[hang]{\centering\Large\bfseries}{\thechapter.\hspdiez}{0pt}{\Large\bfseries}
+%\titleformat{\section}{\normalfont\bfseries}{\thesection.}{0.5em}{\normalfont\bfseries}
+\titlespacing{\chapter}{0pt}{-5ex}{5ex}
+%%%%%%%%%%%%%%%%%%%%%%%%%Configurar el encabezado y pie de página%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\fancyhf{}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\rhead{\thepage}
+	\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+%%%%%%%%%%%%%%%%%%%%%%%%Configuración general%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc} % compatibilidad con encoding utf8, de manera que se pueden codificar directamente ciertos caracteres especiales en latex como los acentos
+\usepackage[T1]{fontenc} % paquete relacionado con el encoding de las letras en el documento
+\usepackage[spanish,es-tabla,english]{babel} %permite la compatibilidad con diferentes idiomas
+\usepackage{mathptmx}  % Letra Times New Roman; otros tipos de letra (e.g. lmodern)
+\usepackage{microtype} % mejor tipografía para pdflatex
+\usepackage{csquotes} % mejores comillas
+\usepackage[shortlabels]{enumitem} % añade mejor control para la configuración de listas
+\usepackage{setspace} % permite configurar los espacios de interlineado
+
+\usepackage{lipsum} % permite introducir texto Lorem Ipsum para probar el formato de la página
+\usepackage{indentfirst} % Crea una sangría en el primer párrafo de cada capítulo, si se desea el estilo predeterminado comentar esta línea
+\settowidth{\parindent}{~~~~~}% introduce una sangría de 5 espacios
+%\setlength\parindent{5ex} % argumento para modificar el tamaño de las sangrías en el texto. Comentar esta línea para obtener el valor predeterminado
+\usepackage{siunitx} % configura unidades de medidas en ciencia
+\usepackage{pdflscape} % cambia la orientación de la página deseada
+\usepackage{etoc} % permite separar el índice general en partes (e.g. índice de anexos)
+\usepackage{verbatim} % permite hacer comentarios de varias líneas
+%%%%%%%%%%%%%Configuración de figuras y tablas%%%%%%%%%
+\usepackage{tabu} % crea un ambiente nuevo para tablas con más funciones
+\usepackage{booktabs} % mejores reglas horizontales para tablas
+\usepackage{array} % permite más control del tamaño de celdas en una tabla
+\usepackage{longtable} % permite tablas que se extiendan más de una página
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{\cdot}{#1} }
+\newcommand{\cabeza}[1]{\textbf{#1}}
+%\setlength{\extrarowheight}{5pt} % produce espacio extra entre las filas
+%\setlength{\abovetopsep}{1ex} % set space left above toprule
+\setlength{\heavyrulewidth}{1.5pt} % width of both top and bottom rule
+\usepackage[font=small,labelfont=bf,margin=1cm]{caption} % mejora el título de figuras y tablas
+\usepackage{chngcntr} % permite la numeración continua de las tablas y figuras
+\counterwithout{figure}{chapter} % numeración de las figuras no se reinicia con cada capítulo
+\counterwithout{table}{chapter} % numeración de las tablas no se reinicia con cada capítulo
+\usepackage{graphicx} % permite añadir y manejar imágenes en el documento
+\graphicspath{ {./imagenes/} } % localidad del archivo de imagenes
+\usepackage{subcaption} % permite múltiples figuras
+%%%%%%%%%%%%%%%%%%%%% Configuración de la bibliografía %%%%%%%%%%%%%%%%%
+%%%%%%%%%Confguración en Biblatex%%%%%%%%%
+\usepackage[%
+backend=biber,% utiliza biber para procesar el archivo de bibliografía
+style=authoryear-icomp,% estilo de citas por autor y año
+sorting=nyt,% orden de las citas por nombre, año y título
+natbib=true,% permite compatibilidad con los comandos citep{} y citet{} de natbib
+uniquename=init,% crea la lista de nombres únicos incluyendo las iniciales
+giveninits,% usa las iniciales de los autores en la bibliografía
+url=false,% no imprime el url en la bibliografía
+doi=false,% no imprime el doi en la bibliografía
+isbn=false,% no imprime el isbn del libro
+hyperref=true,% permite links en la cita
+maxbibnames=99,% número de autores impresos en la bibliografía
+maxcitenames=2]% permite un máximo de dos autores en la citas
+{biblatex} % paquete que permite la configuración de las citas bibliográficas
+%\DeclareNameAlias{sortname}{last-first}
+%%%\DeclareFieldFormat[article]{title}{#1}
+%%%\DeclareFieldFormat[article]{journaltitle}{#1}
+\DeclareFieldFormat[book]{title}{#1}
+\DeclareFieldFormat[article]{pages}{#1}
+\DeclareFieldFormat[book,incollection,inbook]{pages}{#1 pp}
+%\DeclareFieldFormat{editor}{#1}
+\DeclareFieldFormat{booktitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1\isdot} % remueve las comillas de los títulos en la bibliografía
+\DeclareFieldFormat[article]{journaltitle}{#1} % escribe el nombre de la revista en letra normal y no italizada
+\DefineBibliographyStrings{spanish}{%
+	andothers={et~al\adddot},% las citas con más de dos autores terminarán en "et. al" y no en "y col." 
+	bibliography={Literatura Citada}} % cambia el título de la bibliografía por Literatura Citada
+\renewbibmacro{in:}{%
+ \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+%%%%%%%%%%%%%%%%fin biblatex%%%%%%%%%%%
+%%%%%%%%%% configuración bibliografía con xpatch%%%%%%
+%%Configuración artículo%%%%
+\usepackage{xpatch}
+\xpatchbibmacro{journal+issuetitle}{%
+  \setunit*{\addspace}%
+  \iffieldundef{series}}
+  {%
+  \setunit*{\addcomma\space}%
+  \iffieldundef{series}}{}{}
+
+\renewcommand\bibpagespunct{\ifentrytype{article}{\addcolon}{\addcomma}\space}
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}
+  \printfield[parens]{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+
+\xpatchbibmacro{date+extrayear}{%
+  \printtext[parens]%
+}{%
+  \setunit*{\addperiod\space}%
+  \printtext%
+}{}{}
+
+%%% Configuración capítulo libro
+\DeclareNameAlias{editorin}{first-last}
+\newbibmacro*{byeditor:in}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames[editorin]{editor}%
+     \addcomma\addspace%
+     \usebibmacro{editorstrg}}%
+     \clearname{editor}%
+     \printunit{\addperiod\space}}
+     
+\xpatchbibdriver{incollection}
+  {\usebibmacro{in:}%
+   \usebibmacro{maintitle+booktitle}%
+   \newunit\newblock
+   \usebibmacro{byeditor+others}}
+  {\usebibmacro{in:}%
+   \usebibmacro{byeditor:in}%
+   \setunit{\labelnamepunct}\newblock
+   \usebibmacro{maintitle+booktitle}%
+   \newunit\newblock
+   \usebibmacro{byeditor}}
+  {}{}
+
+\addbibresource{referencias.bib} % nombre del archivo con las referencias en formato bib(la)Tex
+
+
+
+
+%%%%%%%%%%Declaración para biblatex 3.4 y biber 2.5%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%	SOLUCIÓN NO FUNCIONA PARA BIBLATEX 3.3 Y NO ES NECESARIO A PARTIR DE LA VERSIÓN 3.5
+%\DeclareDelimFormat[cbx@textcite]{nameyeardelim}{\addspace} % se necesita para compensar un bug de la versión 3.4 biblatex donde cita de la manera autor, (año) en lugar de autor (año).
+
+%\DeclareNameAlias{sortname}{last-first}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[colorlinks=true, allcolors=black]{hyperref} % permite la creación de links en el texto, es mejor cargar este paquete al final del preámbulo
+
+%%%%%%%%%%%%%%%% Paquetes opcionales, chequear la describción %%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{parskip} % maneja la identación de los párrafos, mirar mejor
+%\usepackage{url} % mejor compatibilidad con enlaces url en el texto
+%\usepackage{todonotes} % add notes of things to add to the manuscript
+%\usepackage{verbatim} % permite crear comentarios multilínea
+% % handle line spacing
+

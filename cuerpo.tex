@@ -1,0 +1,48 @@
+\input{preambulo}
+%\includeonly{introduccion} % utilizar para filtrar que capítulos mostrar en el texto
+\begin{document}
+\frontmatter
+\etocdepthtag.toc{general} % configura a partir de donde crear el índice general
+\include{portada}
+\doublespacing % configura el documento en espacio doble --
+\include{resumen}%(obligatorio)
+\include{dedicatoria}%(opcional)
+\include{agradecimientos}%(obligatorio)
+%% Índice general (obligatorio)%%
+\etocsettagdepth{general}{subsection}
+\etocsettagdepth{apendice}{none}
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\listoftables % índice de tablas  (obligatorio si hay tablas)
+\listoffigures % Índice de figuras (obligatorio si hay figuras)
+
+%%Índice de Anexos (obligatorio si los hay)%% 
+\etocsettagdepth{general}{none}
+\etocsettagdepth{apendice}{subsection}
+\etoctocstyle{1}{Índice de anexos}
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\mainmatter
+\selectlanguage{spanish}
+\include{introduccion}
+\include{antecedentes}
+\include{justificacion}
+\include{objetivos}
+\include{metodos}
+\include{resultados}
+\include{discusion}
+\include{conclusion}
+\include{recomendaciones}
+\printbibliography[heading=bibintoc]
+
+\etocdepthtag.toc{apendice}
+
+\appendix
+
+
+\include{anexos}
+
+\end{document}
